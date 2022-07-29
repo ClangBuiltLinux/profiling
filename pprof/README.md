@@ -41,3 +41,24 @@ $ perf record -e cycles:pp --freq=256 --output=perf.data --call-graph lbr -- mak
 
 # Example View
 ![](./ss1.png)
+
+# Views
+
+##### Flame
+Visual representation of call stack. Promising optimization targets aer usually located in the widest call stack and are wider than expected. Most useful when paired with a **Pivot** (see below).
+
+##### Graph
+Visual representation of functional dependencies and recursive call chains. Very unreadable for large profiles.
+
+##### Top-Down
+Numerical listing of the hottest methods starting from the top.
+
+##### Bottom-Up
+Numerical listing of the hottest methods starting from the bottom.
+
+##### Tree
+Similar to Graph, but more readable for large profiles.
+
+##### List
+Essentially a flattened view of Bottom-Up. 
+
