@@ -26,6 +26,7 @@
 #x86_64 kernel build with cpu cycles
 $ perf record -e cycles:pp --freq=256 --output=perf.data --call-graph lbr -- make LLVM=1 -j72
 ```
+*tip: you can massively reduce your perf.data size but using a smaller frequency like 256 or 128.
 
 2. convert `perf.data` to profile proto using `perf_to_profile`.
 
