@@ -1,4 +1,4 @@
-# pprof
+# Using Google's pprof for profiling the Linux Kernel
 
 ## Setup
 
