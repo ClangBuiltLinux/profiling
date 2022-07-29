@@ -61,3 +61,9 @@ Essentially a flattened view of Bottom-Up.
 
 # Example View
 ![](./ss1.png)
+
+# Pivot
+Pivots are useful when investigating a specific hot method. They allow you to originate function calls coming in and calls going out. Careful, though, pprof pivots are case-sensitive!
+
+# Example View w/ Pivot
+![](./exview_pivot.png)
