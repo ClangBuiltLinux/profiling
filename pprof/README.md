@@ -33,4 +33,8 @@ $ perf record -e cycles:pp --freq=256 --output=perf.data --call-graph lbr -- mak
 
 3. Feed to pprof.
 
+### Internally within Google
 `$ pprof -flame -nodefraction .1 profile.data`
+
+### Externally, must host web server locally
+`$ pprof -http=":8000" -nodefraction .1 profile.data`
