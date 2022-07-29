@@ -38,3 +38,6 @@ $ perf record -e cycles:pp --freq=256 --output=perf.data --call-graph lbr -- mak
 
 ### Externally, must host web server locally
 `$ pprof -http=":8000" -nodefraction .1 profile.data`
+
+# Example View
+![](./ss1.png)
