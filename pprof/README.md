@@ -67,3 +67,5 @@ Pivots are useful when investigating a specific hot method. They allow you to or
 
 # Example View w/ Pivot
 ![](./exview_pivot.png)
+
+`Expr::isIntegerConstantExpr` is the main caller of `CheckICE` and `CheckEvalInICE` is called frequently from `CheckICE`.
