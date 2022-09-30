@@ -34,3 +34,20 @@ TODO: issues on AMD until...zen3?
 ```sh
 perf report --no-children --sort=dso,symbol
 ```
+
+### Errors
+
+If you observe the error
+```
+Error:
+Invalid event (cycles:ppu) in per-thread mode, enable system wide with '-a'.
+```
+and happen to be on an AMD ZEN2 or older kernel, try dropping `:pp` from the
+`perf record` command, and switching from `--call-graph lbr` to
+`--call-graph fp`. This will generally require you to recompile your binary
+with frame pointers. LLVM can be profiled, but can only report hottest
+functions without meaningful context.
+
+Patches in flight to fix this:
+- https://lore.kernel.org/lkml/166155216401.401.5809694678609694438.tip-bot2@tip-bot2/
+- https://lore.kernel.org/lkml/20220829113347.295-1-ravi.bangoria@amd.com/
