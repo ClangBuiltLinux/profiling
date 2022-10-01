@@ -27,7 +27,6 @@ cd linux-5.19.12
 make LLVM=1 -j$(nproc) defconfig
 perf record -e cycles:pp --freq=128 --call-graph lbr -- make LLVM=1 -j$(nproc)
 ```
-TODO: issues on AMD until...zen3?
 
 ## Display results
 
