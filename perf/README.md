@@ -34,13 +34,15 @@ perf record -e cycles:pp --freq=128 --call-graph lbr -- make LLVM=1 -j$(nproc)
 perf report --no-children --sort=dso,symbol
 ```
 
-### Errors
+## Errors
 
 If you observe the error
+
 ```
 Error:
 Invalid event (cycles:ppu) in per-thread mode, enable system wide with '-a'.
 ```
+
 and happen to be on an AMD ZEN2 or older kernel, try dropping `:pp` from the
 `perf record` command, and switching from `--call-graph lbr` to
 `--call-graph fp`. This will generally require you to recompile your binary
@@ -50,3 +52,37 @@ functions without meaningful context.
 Patches in flight to fix this:
 - https://lore.kernel.org/lkml/166155216401.401.5809694678609694438.tip-bot2@tip-bot2/
 - https://lore.kernel.org/lkml/20220829113347.295-1-ravi.bangoria@amd.com/
+
+## Perf Collection Notes
+
+On existing AMD Zen2, Zen3 the following cmdline:
+
+```sh
+$ perf record -e cycles:pp --freq=128 --call-graph lbr -- <command to profile>
+```
+
+does not work. I see two reasons:
+
+1. `cycles:pp` is likely converted into IBS op in cycle mode.
+    Current production kernels do not support IBS in per-thread
+    mode. This is purely a kernel limitation, and
+
+2. `call-graph lbr` is not supported on AMD because they do
+   not have LBR and therefore no LBR callstack mode.
+
+The best way to get what you want here today on AMD Zen2 and Zen3:
+
+```sh
+$ perf record -e cycles --freq=128 -g -- <command to profile>
+```
+
+On AMD Zen3, there is a precursor to LBR with Branch Sampling (BRS),
+and you can use it to sample taken branches but not for callstacks. I
+mention the cmdline here for reference:
+
+```sh
+$ perf record -e cpu/branch-brs/ -c 1000037  -b  -- <command to profile>
+```
+
+Note that AMD Zen3 BRS is enough to get the autoFDO usage of an
+LBR working as per the cmdline above.
