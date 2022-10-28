@@ -70,11 +70,15 @@ does not work. I see two reasons:
 2. `call-graph lbr` is not supported on AMD because they do
    not have LBR and therefore no LBR callstack mode.
 
-The best way to get what you want here today on AMD Zen2 and Zen3:
+The best way to get what you want here today on AMD Zen2 and Zen3[^1]:
 
 ```sh
 $ perf record -e cycles --freq=128 -g -- <command to profile>
 ```
+
+**Note:** The above command works, but when we try to convert it into
+something Clang can understand (via https://github.com/google/autofdo)
+results in a zero-sized file.
 
 On AMD Zen3, there is a precursor to LBR with Branch Sampling (BRS),
 and you can use it to sample taken branches but not for callstacks. I
